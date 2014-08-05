@@ -137,7 +137,7 @@ app.ActionView = Backbone.View.extend({
         var self = this;
         _.each(self.collection, function(post) {
             console.log(post);
-        }
+        });
     }    
 });
 
