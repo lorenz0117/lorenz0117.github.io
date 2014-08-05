@@ -115,11 +115,11 @@ app.PostView = Backbone.View.extend({
         this.model.bind('change', this.render, this);
         
         this.model.set('id', '53e04830210fc45b67000035');
-        //this.model.fetch(); 
+        this.model.fetch(); 
     },
     render: function() {
  		var htmlCodes = this.template(this.model.attributes);
-        this.$el.html(htmlCodes);
+        //this.$el.html(htmlCodes);
     }
 });
 
