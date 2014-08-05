@@ -81,15 +81,18 @@ app.PostItemView = Backbone.View.extend({
         
         this.template = _.template($('#tmpl-postitem').html());
         this.model.bind('change', this.render, this);
-        /*
+        
         this.model.fetch({
-            success: function(model, response, options) {
+            success: function(model, response, options) {	
+                self.prefetch();
             }
         }); 
-        */
     },
     prefetch: function() {
-        
+        $('[data-tag="postitem"]').each(function() {
+            var me = $(this),
+                id = me.data('post-id');
+        });
     },
     render: function() {
  		var htmlCodes = this.template(this.model.attributes);
