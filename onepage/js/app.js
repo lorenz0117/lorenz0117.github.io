@@ -90,6 +90,18 @@ app.PostItemView = Backbone.View.extend({
             }
         }); 
     },
+    events: {
+        'click [data-tag="postitem"]':  'showPost'
+    },
+    showPost: function(event) {
+        var me = $(event.target),
+            id = me.data('post-id'),
+            post = this.collection.get({id: id});
+        //console.log(id);
+        event.preventDefault();
+        
+        app.postView.model.set(post.attributes);
+    },
     prefetch: function() {
         var self = this;
         
@@ -125,24 +137,7 @@ app.PostView = Backbone.View.extend({
     }
 });
 
-app.ActionView = Backbone.View.extend({
-    el: '#postitems',
-    events: {
-        'click #showitem':  'show'
-    },
-    initialize: function() {
-        //this.model = new app.SubmitMessage();
-    },
-    show: function() {
-        var self = this;
-        _.each(self.collection, function(post) {
-            console.log(post);
-        });
-    }    
-});
-
 $(document).ready(function(){
     app.postItemView = new app.PostItemView();
     app.postView = new app.PostView();
-    app.actionView = new app.ActionView();
 });
