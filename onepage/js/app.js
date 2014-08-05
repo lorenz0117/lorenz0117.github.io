@@ -41,7 +41,7 @@ app.Post = Backbone.Model.extend({
         return 'http://booklog.io/1/post/' + this.get('id');
     },
     // no good
-    id: '53e04830210fc45b67000035',
+    id: '',
     defaults: {
         "success": true,
         "errors": [],
@@ -65,6 +65,10 @@ app.Post = Backbone.Model.extend({
     }
 });
 
+//
+app.postCollection = Backbone.Collection.extend({
+    model: app.Post 
+});
 
 /**
 * VIEWS
@@ -73,10 +77,19 @@ app.PostItemView = Backbone.View.extend({
     el: '#postitems',
     initialize: function() {
 		this.model = new app.PostItem();
+        this.collection = new app.postCollection();
+        
         this.template = _.template($('#tmpl-postitem').html());
         this.model.bind('change', this.render, this);
+        /*
+        this.model.fetch({
+            success: function(model, response, options) {
+            }
+        }); 
+        */
+    },
+    prefetch: function() {
         
-        this.model.fetch(); 
     },
     render: function() {
  		var htmlCodes = this.template(this.model.attributes);
