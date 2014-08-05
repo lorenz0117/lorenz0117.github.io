@@ -76,6 +76,8 @@ app.postCollection = Backbone.Collection.extend({
 app.PostItemView = Backbone.View.extend({
     el: '#postitems',
     initialize: function() {
+        var self = this;
+        
 		this.model = new app.PostItem();
         this.collection = new app.postCollection();
         
@@ -89,16 +91,16 @@ app.PostItemView = Backbone.View.extend({
         }); 
     },
     prefetch: function() {
+        var self = this;
+        
         $('[data-tag="postitem"]').each(function() {
-             var me = $(this), 
-                id = me.data('post-id'),
-                post = new app.Post({id: id});
+             var me = $(this),
+                 id = me.data('post-id'),
+                 post = new app.Post({id: id});
             
             post.fetch();
             
-            this.collection.push(post);
-            
-            console.log(JSON.stringify(post.attributes));
+            self.collection.push(post);
         });
     },
     render: function() {
@@ -123,8 +125,24 @@ app.PostView = Backbone.View.extend({
     }
 });
 
+app.ActionView = Backbone.View.extend({
+    el: '#postitems',
+    events: {
+        'click #showitem':  'show'
+    },
+    initialize: function() {
+        //this.model = new app.SubmitMessage();
+    },
+    show: function() {
+        var self = this;
+        _.each(self.collection, function(post) {
+            console.log(post);
+        }
+    }    
+});
 
 $(document).ready(function(){
     app.postItemView = new app.PostItemView();
     app.postView = new app.PostView();
+    app.actionView = new app.ActionView();
 });
